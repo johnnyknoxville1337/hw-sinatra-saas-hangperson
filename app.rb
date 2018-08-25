@@ -5,7 +5,7 @@ require 'sinatra'
 
 class MyApp < Sinatra::Base
   get '/' do
-    "<!DOCTYPE html><html><head></head><body><h1>aloha Hawaii</h1></body></html>"
+    "<!DOCTYPE html><html><head></head><body><h1>Hello Wöald</h1></body></html>"
   end
 end
 

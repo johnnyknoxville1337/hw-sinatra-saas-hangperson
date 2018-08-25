@@ -1,5 +1,5 @@
 require './app'
 run HangpersonApp
 
-require './app'
-run MyApp
+#require './app'
+#run MyApp
