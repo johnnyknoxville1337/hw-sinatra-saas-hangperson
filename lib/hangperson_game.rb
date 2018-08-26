@@ -41,9 +41,9 @@ class HangpersonGame
     end
   end
 
-def word_with_guesses
-  word.gsub(/[^#{guesses}\W]/, '-')
-end
+  def word_with_guesses
+    word.gsub(/[^#{guesses}\W]/, '-')
+  end
 
   def check_win_or_lose
   counter = 0
