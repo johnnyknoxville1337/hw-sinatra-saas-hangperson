@@ -7,9 +7,25 @@ class HangpersonGame
 
   # def initialize()
   # end
-  attr_accessor:word
-  attr_accessor:guesses
-  attr_accessor:wrong_guesses
+  attr_accessor:word, :guesses, :wrong_guesses
+  
+  def initialize(word)
+    @word = word
+    @guesses = ''
+    @wrong_guesses = ''
+  end
+  
+  # You can test it by running $ bundle exec irb -I. -r app.rb
+  # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
+  #  => "cooking"   <-- some random word
+  def self.get_random_word
+    require 'uri'
+    require 'net/http'
+    uri = URI('http://watchout4snakes.com/wo4snakes/Random/RandomWord')
+    Net::HTTP.new('watchout4snakes.com').start { |http|
+      return http.post(uri, "").body
+    }
+  end
   
   def guess(letter)
       
@@ -24,34 +40,18 @@ class HangpersonGame
       wrong_guesses << letter
     end
   end
-  
-  
-  def initialize(word)
-    @word = word
-    @guesses = ''
-    @wrong_guesses = ''
-  end
 
 def word_with_guesses
   word.gsub(/[^#{guesses}\W]/, '-')
 end
 
-def check_win_or_lose
-  return win if word_with_guesses == word
-  return :lose if wrong_guesses.length >=7
-  :play
-end
-
-  # You can test it by running $ bundle exec irb -I. -r app.rb
-  # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
-  #  => "cooking"   <-- some random word
-  def self.get_random_word
-    require 'uri'
-    require 'net/http'
-    uri = URI('http://watchout4snakes.com/wo4snakes/Random/RandomWord')
-    Net::HTTP.new('watchout4snakes.com').start { |http|
-      return http.post(uri, "").body
-    }
+  def check_win_or_lose
+  counter = 0
+    return :lose if wrong_guesses.length >=7
+    @word.each_char do |letter|
+      counter += 1 if @guesses.include? letter 
+    end
+    if counter == @word.length then :win
+    else :play end
   end
-
 end
